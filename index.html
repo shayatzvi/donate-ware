@@ -1,26 +1,25 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full bg-[#141218] text-[#E6E0E9] selection:bg-[#D0BCFF] selection:text-[#381E72]">
+<html lang="en" class="h-full bg-black text-white selection:bg-blue-500 selection:text-white">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Tap to Pay POS</title>
 
-    <!-- PWA & Standalone App Meta Tags -->
+    <!-- Mobile PWA Metadata -->
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Tap to Pay">
-    <meta name="theme-color" content="#141218">
-    <link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22Tap%20to%20Pay%20POS%22%2C%22short_name%22%3A%22TapToPay%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23141218%22%2C%22theme_color%22%3A%22%23141218%22%7D">
+    <meta name="apple-mobile-web-app-title" content="Tap to Pay POS">
+    <meta name="theme-color" content="#000000">
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Google Fonts & Icons -->
+    <!-- Google Fonts & Material Symbols -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,1,0" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
 
     <script>
@@ -28,36 +27,30 @@
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Plus Jakarta Sans', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+                        sans: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Display"', '"SF Pro Text"', 'Inter', 'sans-serif'],
                         mono: ['JetBrains Mono', 'monospace'],
                     },
                     colors: {
-                        md3: {
-                            bg: '#141218',
-                            surface: '#1D1B20',
-                            'surface-low': '#1D1B20',
-                            'surface-container': '#211F26',
-                            'surface-high': '#2B2930',
-                            'surface-highest': '#36343B',
-                            primary: '#D0BCFF',
-                            'on-primary': '#381E72',
-                            'primary-container': '#4F378B',
-                            'on-primary-container': '#EADDFF',
-                            secondary: '#CCC2DC',
-                            'secondary-container': '#4A4458',
-                            'on-secondary-container': '#E8DEF8',
-                            tertiary: '#EFB8C8',
-                            outline: '#938F99',
-                            'outline-variant': '#49454F',
-                            error: '#F2B8B5',
-                            'error-container': '#8C1D18',
-                            success: '#A6F4C5',
-                            'success-container': '#005232',
+                        ios: {
+                            bg: '#000000',
+                            card: '#1C1C1E',
+                            cardBorder: 'rgba(255, 255, 255, 0.08)',
+                            surface: '#2C2C2E',
+                            surfaceHover: '#3A3A3C',
+                            blue: '#0A84FF',
+                            green: '#30D158',
+                            orange: '#FF9F0A',
+                            gold: '#FFD60A',
+                            red: '#FF453A',
+                            purple: '#BF5AF2',
+                            gray: '#8E8E93',
+                            lightGray: '#A1A1A6'
                         }
                     },
-                    borderRadius: {
-                        '4xl': '2rem',
-                        '5xl': '2.5rem',
+                    boxShadow: {
+                        'glow-blue': '0 0 35px -5px rgba(10, 132, 255, 0.4)',
+                        'glow-green': '0 0 45px -5px rgba(48, 209, 88, 0.4)',
+                        'apple-card': '0 20px 40px -15px rgba(0,0,0,0.8)'
                     }
                 }
             }
@@ -65,352 +58,399 @@
     </script>
 
     <style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        body {
+            -webkit-tap-highlight-color: transparent;
+            font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+            user-select: none;
+            -webkit-user-select: none;
+            background-color: #000000;
         }
 
-        /* Material Contactless Ripple Animation */
-        @keyframes md3-pulse {
-            0% { transform: scale(0.92); opacity: 0.85; }
-            50% { transform: scale(1.18); opacity: 0.25; }
-            100% { transform: scale(0.92); opacity: 0.85; }
+        /* Apple Tap Symbol Ripple Animations */
+        @keyframes nfc-pulse {
+            0% { transform: scale(0.92); opacity: 0.3; }
+            50% { transform: scale(1.08); opacity: 0.9; }
+            100% { transform: scale(0.92); opacity: 0.3; }
         }
-        .animate-md3-nfc {
-            animation: md3-pulse 2.2s cubic-bezier(0.2, 0, 0, 1) infinite;
-        }
-
-        /* Material Card Motion Animation */
-        @keyframes md3-card-tap {
-            0% { transform: translateY(-50px) rotate(-8deg) scale(0.95); opacity: 0; }
-            40% { transform: translateY(8px) rotate(0deg) scale(1.02); opacity: 1; }
-            60% { transform: translateY(0px) rotate(0deg) scale(1); opacity: 1; }
-            100% { transform: translateY(-50px) rotate(-8deg) scale(0.95); opacity: 0; }
-        }
-        .animate-card-tap {
-            animation: md3-card-tap 2.5s cubic-bezier(0.2, 0, 0, 1) infinite;
+        .animate-nfc-pulse {
+            animation: nfc-pulse 2.2s infinite ease-in-out;
         }
 
-        /* MD3 Dynamic Circular Progress Indicator */
-        .md3-spinner {
-            border: 4px solid rgba(208, 188, 255, 0.2);
-            border-top-color: #D0BCFF;
-            border-radius: 50%;
-            animation: md3-spin 0.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        @keyframes ripple-ring {
+            0% { transform: scale(0.8); opacity: 0.8; }
+            100% { transform: scale(1.8); opacity: 0; }
         }
-        @keyframes md3-spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .animate-ripple-1 {
+            animation: ripple-ring 2.5s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
+        }
+        .animate-ripple-2 {
+            animation: ripple-ring 2.5s infinite cubic-bezier(0.215, 0.61, 0.355, 1) 0.8s;
         }
 
-        /* Scale Pop for Success Checkmark */
-        @keyframes pop-check {
-            0% { transform: scale(0.5); opacity: 0; }
-            70% { transform: scale(1.15); opacity: 1; }
+        /* Apple Checkmark Bounce */
+        @keyframes apple-check-pop {
+            0% { transform: scale(0.4); opacity: 0; }
+            60% { transform: scale(1.12); opacity: 1; }
+            80% { transform: scale(0.95); }
             100% { transform: scale(1); opacity: 1; }
         }
-        .animate-pop-check {
-            animation: pop-check 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        .animate-check-pop {
+            animation: apple-check-pop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        /* Custom scrollbar hiding */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Glassmorphic backdrop effect */
+        .ios-blur {
+            backdrop-filter: blur(25px) saturate(190%);
+            -webkit-backdrop-filter: blur(25px) saturate(190%);
         }
     </style>
 </head>
-<body class="h-full bg-md3-bg text-[#E6E0E9] font-sans antialiased flex flex-col justify-between overflow-x-hidden selection:bg-md3-primary selection:text-md3-on-primary">
+<body class="h-full bg-black text-white font-sans antialiased flex flex-col justify-between overflow-x-hidden selection:bg-ios-blue">
 
-    <!-- TOP APP BAR -->
-    <header class="w-full bg-md3-surface-container border-b border-md3-outline-variant/30 px-4 py-3 sm:px-6 flex items-center justify-between sticky top-0 z-30 shadow-md">
-        <div class="flex items-center space-x-3">
-            <div class="w-10 h-10 rounded-2xl bg-md3-primary-container text-md3-on-primary-container flex items-center justify-center shadow-md">
-                <span class="material-symbols-outlined text-xl">contactless</span>
-            </div>
-            <div>
-                <div class="flex items-center gap-1.5">
-                    <span id="app-shop-name" class="font-bold text-base sm:text-lg text-[#E6E0E9]">My Store</span>
-                    <button onclick="editShopNameInline()" title="Edit Shop Name" class="p-1 rounded-full hover:bg-md3-surface-highest text-md3-outline hover:text-md3-primary transition flex items-center">
-                        <span class="material-symbols-outlined text-xs">edit</span>
-                    </button>
+    <!-- TOP IOS NATIVE NAVIGATION BAR -->
+    <header class="w-full bg-black/80 border-b border-ios-cardBorder px-4 py-3 sm:px-6 sticky top-0 z-30 ios-blur">
+        <div class="max-w-xl mx-auto flex items-center justify-between">
+            
+            <!-- Store Profile Header -->
+            <div class="flex items-center space-x-3">
+                <button onclick="editShopNameInline()" title="Edit Shop Name" class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-ios-orange to-amber-400 text-black font-bold flex items-center justify-center shadow-md hover:scale-105 active:scale-95 transition">
+                    <span class="material-symbols-outlined text-2xl">storefront</span>
+                </button>
+                <div>
+                    <div class="flex items-center gap-1.5">
+                        <span id="app-shop-name" class="font-bold text-base sm:text-lg text-white tracking-tight">Grapner’s Greenhouse</span>
+                        <button onclick="editShopNameInline()" class="text-white/40 hover:text-white transition">
+                            <span class="material-symbols-outlined text-sm">edit</span>
+                        </button>
+                    </div>
+                    <p class="text-[10px] text-ios-green font-semibold tracking-wider uppercase flex items-center gap-1">
+                        <span class="w-1.5 h-1.5 rounded-full bg-ios-green animate-pulse"></span> Tap to Pay on iPhone Ready
+                    </p>
                 </div>
-                <p class="text-[10px] text-md3-success font-semibold tracking-wider uppercase flex items-center gap-1">
-                    <span class="w-1.5 h-1.5 rounded-full bg-md3-success animate-pulse"></span> Tap to Pay Active
-                </p>
-            </div>
-        </div>
-
-        <!-- App Tab Navigation -->
-        <nav class="flex items-center bg-md3-surface rounded-full p-1 border border-md3-outline-variant/30 shadow-inner">
-            <button onclick="switchTab('terminal')" id="tab-btn-terminal" class="px-3.5 py-1.5 sm:px-5 sm:py-2 rounded-full text-xs font-bold transition flex items-center gap-1.5 bg-md3-primary text-md3-on-primary shadow-sm">
-                <span class="material-symbols-outlined text-base">dialpad</span>
-                <span class="hidden sm:inline">Terminal</span>
-            </button>
-            <button onclick="switchTab('activity')" id="tab-btn-activity" class="px-3.5 py-1.5 sm:px-5 sm:py-2 rounded-full text-xs font-bold transition flex items-center gap-1.5 text-md3-outline hover:text-[#E6E0E9]">
-                <span class="material-symbols-outlined text-base">receipt_long</span>
-                <span class="hidden sm:inline">Activity</span>
-            </button>
-        </nav>
-
-        <div class="flex items-center space-x-2">
-            <!-- Decline Test Badge -->
-            <div id="badge-test-mode" class="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-semibold">
-                <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
-                FORCE DECLINE
             </div>
 
-            <!-- Settings Button -->
-            <button onclick="toggleSettingsModal()" class="w-10 h-10 sm:w-auto sm:px-4 sm:py-2 bg-md3-surface-high hover:bg-md3-surface-highest text-md3-primary rounded-full transition flex items-center justify-center gap-1.5 text-xs font-semibold border border-md3-outline-variant/40">
-                <span class="material-symbols-outlined text-lg">settings</span>
-                <span class="hidden sm:inline">Settings</span>
-            </button>
+            <!-- iOS Segment Controller Navigation -->
+            <nav class="flex items-center bg-[#1C1C1E] p-1 rounded-full border border-white/10 shadow-inner">
+                <button onclick="switchTab('terminal')" id="tab-btn-terminal" class="px-3.5 py-1.5 rounded-full text-xs font-bold transition bg-white text-black shadow-sm">
+                    Register
+                </button>
+                <button onclick="switchTab('activity')" id="tab-btn-activity" class="px-3.5 py-1.5 rounded-full text-xs font-semibold transition text-white/60 hover:text-white">
+                    Activity
+                </button>
+            </nav>
+
+            <!-- Settings Button & Indicator -->
+            <div class="flex items-center gap-2">
+                <div id="badge-decline-mode" class="hidden sm:flex items-center gap-1 px-2.5 py-1 rounded-full bg-ios-red/20 border border-ios-red/40 text-ios-red text-[10px] font-bold">
+                    <span class="w-1.5 h-1.5 rounded-full bg-ios-red animate-pulse"></span> Decline
+                </div>
+                <button onclick="toggleSettingsModal()" class="w-10 h-10 bg-ios-card hover:bg-ios-surface text-white rounded-full transition flex items-center justify-center border border-ios-cardBorder active:scale-95">
+                    <span class="material-symbols-outlined text-xl">tune</span>
+                </button>
+            </div>
         </div>
     </header>
 
-    <!-- MAIN APP CONTAINER -->
-    <main class="flex-1 w-full max-w-xl mx-auto p-4 sm:p-6 flex flex-col justify-center items-center">
+    <!-- MAIN APPLICATION CONTAINER -->
+    <main class="flex-1 w-full max-w-md mx-auto flex flex-col justify-between p-4 sm:p-5">
 
         <!-- TAB 1: POS TERMINAL VIEW -->
-        <section id="tab-terminal-view" class="w-full flex-1 flex flex-col justify-between max-w-md mx-auto">
+        <section id="tab-terminal-view" class="w-full flex-1 flex flex-col justify-between">
             
-            <!-- SCREEN 1: KEYPAD INPUT -->
-            <div id="screen-keypad" class="flex-1 flex flex-col justify-between py-2 space-y-4">
+            <!-- MODE SWITCHER (KEYPAD VS QUICK ITEMS) -->
+            <div class="flex items-center justify-between bg-ios-card p-1 rounded-2xl border border-ios-cardBorder mb-4 text-xs font-semibold">
+                <button onclick="setPosInputMode('keypad')" id="mode-btn-keypad" class="flex-1 py-2 rounded-xl transition text-center bg-ios-surface text-white shadow-sm flex items-center justify-center gap-1.5">
+                    <span class="material-symbols-outlined text-base">pin</span> Keypad
+                </button>
+                <button onclick="setPosInputMode('items')" id="mode-btn-items" class="flex-1 py-2 rounded-xl transition text-center text-white/50 hover:text-white flex items-center justify-center gap-1.5">
+                    <span class="material-symbols-outlined text-base">grid_view</span> Catalog Items (<span id="cart-count">0</span>)
+                </button>
+            </div>
+
+            <!-- KEYPAD INPUT DISPLAY -->
+            <div id="pos-mode-keypad" class="flex-1 flex flex-col justify-between space-y-4">
                 
-                <!-- Amount Display Container -->
-                <div class="my-auto text-center py-8 bg-md3-surface-container rounded-4xl border border-md3-outline-variant/20 shadow-inner px-4 relative">
-                    <span id="line-item-desc" class="text-xs font-bold text-md3-primary tracking-widest uppercase block mb-1">Enter Charge Amount</span>
-                    <div class="flex items-baseline justify-center font-extrabold text-[#E6E0E9] tracking-tight">
-                        <span id="currency-symbol" class="text-3xl text-md3-primary mr-1">$</span>
-                        <span id="amount-display" class="text-5xl sm:text-6xl font-extrabold">0.00</span>
+                <!-- Large Price & Desc Display -->
+                <div class="my-auto text-center py-7 bg-ios-card border border-ios-cardBorder rounded-3xl px-4 relative shadow-apple-card backdrop-blur-xl">
+                    <span id="line-item-desc" class="text-xs font-semibold text-white/50 uppercase tracking-widest block mb-1">Enter Charge Amount</span>
+                    <div class="flex items-baseline justify-center font-extrabold text-white tracking-tight">
+                        <span id="currency-symbol" class="text-3xl text-white/40 mr-1.5 font-light">$</span>
+                        <span id="amount-display" class="text-5xl sm:text-6xl tracking-tight">17.25</span>
                     </div>
-                    <button onclick="clearNumpad()" class="absolute top-4 right-4 text-xs font-bold text-md3-outline hover:text-md3-primary px-3 py-1 rounded-full bg-md3-surface border border-md3-outline-variant/30 transition">
+                    
+                    <button onclick="clearNumpad()" title="Clear Amount" class="absolute top-3.5 right-3.5 text-xs font-medium text-white/40 hover:text-white px-3 py-1.5 rounded-full bg-ios-surface hover:bg-ios-surfaceHover transition border border-white/5">
                         Clear
                     </button>
                 </div>
 
-                <!-- Material 3 Tip Selector Chips -->
-                <div class="bg-md3-surface-container p-3 rounded-3xl border border-md3-outline-variant/20">
-                    <p class="text-[10px] text-md3-outline font-bold mb-2 px-1 uppercase tracking-wider">Add Tip Optional</p>
-                    <div class="grid grid-cols-4 gap-2 text-xs">
-                        <button onclick="selectTip(0)" id="tip-btn-0" class="tip-btn py-2.5 rounded-2xl bg-md3-primary text-md3-on-primary font-bold transition shadow-sm">No Tip</button>
-                        <button onclick="selectTip(15)" id="tip-btn-15" class="tip-btn py-2.5 rounded-2xl bg-md3-surface-high text-md3-outline hover:text-[#E6E0E9] transition font-semibold">15%</button>
-                        <button onclick="selectTip(18)" id="tip-btn-18" class="tip-btn py-2.5 rounded-2xl bg-md3-surface-high text-md3-outline hover:text-[#E6E0E9] transition font-semibold">18%</button>
-                        <button onclick="selectTip(20)" id="tip-btn-20" class="tip-btn py-2.5 rounded-2xl bg-md3-surface-high text-md3-outline hover:text-[#E6E0E9] transition font-semibold">20%</button>
+                <!-- Tip Selector Bar -->
+                <div class="bg-ios-card p-3 rounded-2xl border border-ios-cardBorder shadow-lg">
+                    <div class="flex justify-between items-center mb-2 px-1">
+                        <span class="text-[11px] font-bold text-white/50 uppercase tracking-wider">Add Tip Option</span>
+                        <span id="tip-amount-label" class="text-xs font-bold text-ios-green">$0.00</span>
+                    </div>
+                    <div class="grid grid-cols-4 gap-2 text-xs font-bold">
+                        <button onclick="selectTip(0)" id="tip-btn-0" class="tip-btn py-2.5 rounded-xl bg-white text-black transition">No Tip</button>
+                        <button onclick="selectTip(15)" id="tip-btn-15" class="tip-btn py-2.5 rounded-xl bg-ios-surface text-white/70 hover:text-white transition">15%</button>
+                        <button onclick="selectTip(18)" id="tip-btn-18" class="tip-btn py-2.5 rounded-xl bg-ios-surface text-white/70 hover:text-white transition">18%</button>
+                        <button onclick="selectTip(20)" id="tip-btn-20" class="tip-btn py-2.5 rounded-xl bg-ios-surface text-white/70 hover:text-white transition">20%</button>
                     </div>
                 </div>
 
-                <!-- MD3 Numeric Keypad Grid -->
-                <div class="grid grid-cols-3 gap-3">
-                    <button onclick="appendDigit('1')" class="h-14 bg-md3-surface-container hover:bg-md3-surface-high active:scale-95 rounded-3xl text-2xl font-bold text-[#E6E0E9] transition border border-md3-outline-variant/20 flex items-center justify-center">1</button>
-                    <button onclick="appendDigit('2')" class="h-14 bg-md3-surface-container hover:bg-md3-surface-high active:scale-95 rounded-3xl text-2xl font-bold text-[#E6E0E9] transition border border-md3-outline-variant/20 flex items-center justify-center">2</button>
-                    <button onclick="appendDigit('3')" class="h-14 bg-md3-surface-container hover:bg-md3-surface-high active:scale-95 rounded-3xl text-2xl font-bold text-[#E6E0E9] transition border border-md3-outline-variant/20 flex items-center justify-center">3</button>
-                    <button onclick="appendDigit('4')" class="h-14 bg-md3-surface-container hover:bg-md3-surface-high active:scale-95 rounded-3xl text-2xl font-bold text-[#E6E0E9] transition border border-md3-outline-variant/20 flex items-center justify-center">4</button>
-                    <button onclick="appendDigit('5')" class="h-14 bg-md3-surface-container hover:bg-md3-surface-high active:scale-95 rounded-3xl text-2xl font-bold text-[#E6E0E9] transition border border-md3-outline-variant/20 flex items-center justify-center">5</button>
-                    <button onclick="appendDigit('6')" class="h-14 bg-md3-surface-container hover:bg-md3-surface-high active:scale-95 rounded-3xl text-2xl font-bold text-[#E6E0E9] transition border border-md3-outline-variant/20 flex items-center justify-center">6</button>
-                    <button onclick="appendDigit('7')" class="h-14 bg-md3-surface-container hover:bg-md3-surface-high active:scale-95 rounded-3xl text-2xl font-bold text-[#E6E0E9] transition border border-md3-outline-variant/20 flex items-center justify-center">7</button>
-                    <button onclick="appendDigit('8')" class="h-14 bg-md3-surface-container hover:bg-md3-surface-high active:scale-95 rounded-3xl text-2xl font-bold text-[#E6E0E9] transition border border-md3-outline-variant/20 flex items-center justify-center">8</button>
-                    <button onclick="appendDigit('9')" class="h-14 bg-md3-surface-container hover:bg-md3-surface-high active:scale-95 rounded-3xl text-2xl font-bold text-[#E6E0E9] transition border border-md3-outline-variant/20 flex items-center justify-center">9</button>
-                    <button onclick="appendDigit('00')" class="h-14 bg-md3-surface-container hover:bg-md3-surface-high active:scale-95 rounded-3xl text-base font-bold text-md3-outline transition border border-md3-outline-variant/20 flex items-center justify-center">00</button>
-                    <button onclick="appendDigit('0')" class="h-14 bg-md3-surface-container hover:bg-md3-surface-high active:scale-95 rounded-3xl text-2xl font-bold text-[#E6E0E9] transition border border-md3-outline-variant/20 flex items-center justify-center">0</button>
-                    <button onclick="backspaceDigit()" class="h-14 bg-md3-surface-container hover:bg-md3-surface-high active:scale-95 rounded-3xl text-md3-primary transition border border-md3-outline-variant/20 flex items-center justify-center">
-                        <span class="material-symbols-outlined text-2xl">backspace</span>
+                <!-- iOS Keypad Grid -->
+                <div class="grid grid-cols-3 gap-2.5">
+                    <button onclick="appendDigit('1')" class="h-14 bg-ios-card hover:bg-ios-surface active:scale-95 rounded-2xl text-2xl font-semibold text-white transition flex items-center justify-center border border-ios-cardBorder shadow-sm">1</button>
+                    <button onclick="appendDigit('2')" class="h-14 bg-ios-card hover:bg-ios-surface active:scale-95 rounded-2xl text-2xl font-semibold text-white transition flex items-center justify-center border border-ios-cardBorder shadow-sm">2</button>
+                    <button onclick="appendDigit('3')" class="h-14 bg-ios-card hover:bg-ios-surface active:scale-95 rounded-2xl text-2xl font-semibold text-white transition flex items-center justify-center border border-ios-cardBorder shadow-sm">3</button>
+                    <button onclick="appendDigit('4')" class="h-14 bg-ios-card hover:bg-ios-surface active:scale-95 rounded-2xl text-2xl font-semibold text-white transition flex items-center justify-center border border-ios-cardBorder shadow-sm">4</button>
+                    <button onclick="appendDigit('5')" class="h-14 bg-ios-card hover:bg-ios-surface active:scale-95 rounded-2xl text-2xl font-semibold text-white transition flex items-center justify-center border border-ios-cardBorder shadow-sm">5</button>
+                    <button onclick="appendDigit('6')" class="h-14 bg-ios-card hover:bg-ios-surface active:scale-95 rounded-2xl text-2xl font-semibold text-white transition flex items-center justify-center border border-ios-cardBorder shadow-sm">6</button>
+                    <button onclick="appendDigit('7')" class="h-14 bg-ios-card hover:bg-ios-surface active:scale-95 rounded-2xl text-2xl font-semibold text-white transition flex items-center justify-center border border-ios-cardBorder shadow-sm">7</button>
+                    <button onclick="appendDigit('8')" class="h-14 bg-ios-card hover:bg-ios-surface active:scale-95 rounded-2xl text-2xl font-semibold text-white transition flex items-center justify-center border border-ios-cardBorder shadow-sm">8</button>
+                    <button onclick="appendDigit('9')" class="h-14 bg-ios-card hover:bg-ios-surface active:scale-95 rounded-2xl text-2xl font-semibold text-white transition flex items-center justify-center border border-ios-cardBorder shadow-sm">9</button>
+                    <button onclick="appendDigit('00')" class="h-14 bg-ios-card hover:bg-ios-surface active:scale-95 rounded-2xl text-sm font-bold text-white/40 transition flex items-center justify-center border border-ios-cardBorder shadow-sm">00</button>
+                    <button onclick="appendDigit('0')" class="h-14 bg-ios-card hover:bg-ios-surface active:scale-95 rounded-2xl text-2xl font-semibold text-white transition flex items-center justify-center border border-ios-cardBorder shadow-sm">0</button>
+                    <button onclick="backspaceDigit()" class="h-14 bg-ios-card hover:bg-ios-surface active:scale-95 rounded-2xl text-white/80 transition flex items-center justify-center border border-ios-cardBorder shadow-sm">
+                        <span class="material-symbols-outlined text-xl">backspace</span>
                     </button>
                 </div>
-
-                <!-- Charge Action Button -->
-                <button id="btn-collect" onclick="initiateTapPayment()" disabled class="w-full py-4 rounded-full bg-md3-primary hover:bg-[#bfa3ff] disabled:opacity-30 text-md3-on-primary font-extrabold text-lg shadow-xl transition flex items-center justify-center gap-2.5">
-                    <span class="material-symbols-outlined text-2xl">contactless</span>
-                    <span id="btn-collect-text">Charge $0.00</span>
-                </button>
             </div>
 
-            <!-- SCREEN 2: TAP TO PAY READY (FULL SCREEN NFC TARGET) -->
-            <div id="screen-tap" class="hidden flex-1 flex flex-col justify-between py-4 text-center">
-                <div>
-                    <span class="text-xs font-bold text-md3-primary uppercase tracking-widest block">Hold Card or Mobile Phone Near Top</span>
-                    <h3 id="tap-charge-amount" class="text-4xl font-black text-[#E6E0E9] mt-2">$0.00</h3>
-                </div>
-
-                <!-- Central Contactless Pulse Target -->
-                <div class="my-auto flex flex-col items-center justify-center relative py-10 cursor-pointer" onclick="simulateTapAction()">
-                    <div class="absolute w-72 h-72 rounded-full bg-md3-primary/10 animate-md3-nfc"></div>
-                    <div class="absolute w-56 h-56 rounded-full bg-md3-primary/20 animate-md3-nfc" style="animation-delay: 0.4s;"></div>
-
-                    <div class="relative z-10 w-40 h-40 rounded-full bg-md3-primary-container border-4 border-md3-primary flex flex-col items-center justify-center shadow-2xl transition transform hover:scale-105 active:scale-95 group">
-                        <span class="material-symbols-outlined text-5xl text-md3-on-primary-container group-hover:scale-110 transition">contactless</span>
-                        <span class="text-xs uppercase font-extrabold text-md3-on-primary-container mt-2 tracking-wider">Tap Here</span>
-                    </div>
-
-                    <!-- Animated Contactless Card Hover -->
-                    <div class="absolute -top-2 pointer-events-none z-20">
-                        <div id="animated-card" class="animate-card-tap w-44 h-28 bg-gradient-to-r from-purple-200 via-indigo-100 to-slate-200 rounded-2xl p-3 shadow-2xl border border-white/80 flex flex-col justify-between text-slate-900">
-                            <div class="flex justify-between items-center">
-                                <span id="sim-card-brand-label" class="text-[9px] font-black tracking-widest uppercase text-slate-800">Contactless</span>
-                                <span class="material-symbols-outlined text-sm text-slate-800">contactless</span>
-                            </div>
-                            <div class="w-7 h-5 bg-amber-400 rounded-md border border-amber-600/40"></div>
-                            <div class="flex justify-between items-end">
-                                <span id="sim-card-digits" class="text-[10px] font-mono font-bold text-slate-900">•••• 4242</span>
-                                <i id="sim-card-logo" class="fa-brands fa-cc-visa text-base text-indigo-900"></i>
-                            </div>
+            <!-- QUICK ITEMS DISPLAY -->
+            <div id="pos-mode-items" class="hidden flex-1 flex flex-col justify-between space-y-3">
+                <div class="grid grid-cols-2 gap-2.5 max-h-[380px] overflow-y-auto no-scrollbar pr-1">
+                    <button onclick="addItemToSale('Fiddle Leaf Fig', 4200)" class="p-3.5 bg-ios-card hover:bg-ios-surface rounded-2xl border border-ios-cardBorder text-left transition flex flex-col justify-between h-24">
+                        <span class="material-symbols-outlined text-ios-green text-2xl">eco</span>
+                        <div>
+                            <p class="font-bold text-xs text-white">Fiddle Leaf Fig</p>
+                            <p class="text-xs text-white/50">$42.00</p>
                         </div>
-                    </div>
-
-                    <p class="text-xs text-md3-outline mt-10 max-w-xs font-medium">
-                        Accepts Visa, Mastercard, Apple Pay, and Google Wallet
-                    </p>
-                </div>
-
-                <!-- Action Controls -->
-                <div class="space-y-3">
-                    <button onclick="simulateTapAction()" class="w-full py-4 rounded-full bg-md3-surface-high hover:bg-md3-surface-highest text-[#E6E0E9] font-bold text-sm border border-md3-outline-variant/30 shadow-md transition flex items-center justify-center gap-2">
-                        <span class="material-symbols-outlined text-xl text-md3-primary">touch_app</span>
-                        <span>Simulate Contactless Tap</span>
                     </button>
-                    <button onclick="cancelTapPayment()" class="w-full py-2.5 text-md3-outline hover:text-[#E6E0E9] text-xs font-bold transition">
-                        Cancel Payment
-                    </button>
-                </div>
-            </div>
-
-            <!-- SCREEN 3: PROCESSING SCREEN -->
-            <div id="screen-processing" class="hidden flex-1 flex flex-col items-center justify-center py-12 text-center">
-                <div class="relative flex items-center justify-center mb-8">
-                    <div class="w-24 h-24 md3-spinner"></div>
-                    <span class="material-symbols-outlined text-3xl text-md3-primary absolute">verified_user</span>
-                </div>
-                <h3 class="text-2xl font-extrabold text-[#E6E0E9] mb-2">Authorizing Payment</h3>
-                <p id="processing-step-text" class="text-sm text-md3-outline font-mono animate-pulse">Communicating with terminal network...</p>
-            </div>
-
-            <!-- SCREEN 4: SUCCESS APPROVED SCREEN -->
-            <div id="screen-success" class="hidden flex-1 flex flex-col justify-between py-6 text-center">
-                <div class="my-auto flex flex-col items-center">
-                    <!-- Material Success Animated Check Circle -->
-                    <div class="w-28 h-28 rounded-full bg-md3-success-container text-md3-success flex items-center justify-center mb-6 shadow-2xl border-2 border-md3-success/40 animate-pop-check">
-                        <span class="material-symbols-outlined text-6xl">check_circle</span>
-                    </div>
-
-                    <h3 class="text-2xl font-black text-[#E6E0E9]">Payment Approved</h3>
-                    <p id="success-amount-text" class="text-4xl font-extrabold text-md3-success mt-2">$0.00</p>
-
-                    <!-- Receipt Summary Container -->
-                    <div class="mt-8 bg-md3-surface-container border border-md3-outline-variant/20 rounded-3xl p-5 w-full text-left space-y-3 text-xs sm:text-sm">
-                        <div class="flex justify-between text-md3-outline">
-                            <span>Merchant</span>
-                            <span id="success-merchant-name" class="text-[#E6E0E9] font-bold">My Store</span>
+                    <button onclick="addItemToSale('Monstera Deliciosa', 3500)" class="p-3.5 bg-ios-card hover:bg-ios-surface rounded-2xl border border-ios-cardBorder text-left transition flex flex-col justify-between h-24">
+                        <span class="material-symbols-outlined text-ios-blue text-2xl">potted_plant</span>
+                        <div>
+                            <p class="font-bold text-xs text-white">Monstera Deliciosa</p>
+                            <p class="text-xs text-white/50">$35.00</p>
                         </div>
-                        <div class="flex justify-between text-md3-outline">
-                            <span>Payment Method</span>
-                            <span id="success-card-brand" class="text-[#E6E0E9] font-medium flex items-center gap-1.5">
-                                <i class="fa-brands fa-cc-visa text-md3-primary"></i> Visa •••• 4242
-                            </span>
+                    </button>
+                    <button onclick="addItemToSale('Organic Potting Mix', 1250)" class="p-3.5 bg-ios-card hover:bg-ios-surface rounded-2xl border border-ios-cardBorder text-left transition flex flex-col justify-between h-24">
+                        <span class="material-symbols-outlined text-ios-orange text-2xl">compost</span>
+                        <div>
+                            <p class="font-bold text-xs text-white">Organic Potting Mix</p>
+                            <p class="text-xs text-white/50">$12.50</p>
                         </div>
-                        <div class="flex justify-between text-md3-outline">
-                            <span>Transaction ID</span>
-                            <span id="success-intent-id" class="text-[#E6E0E9] font-mono text-xs">pi_3M00...89x</span>
+                    </button>
+                    <button onclick="addItemToSale('Terracotta Planter', 1800)" class="p-3.5 bg-ios-card hover:bg-ios-surface rounded-2xl border border-ios-cardBorder text-left transition flex flex-col justify-between h-24">
+                        <span class="material-symbols-outlined text-ios-gold text-2xl">grid_goldenratio</span>
+                        <div>
+                            <p class="font-bold text-xs text-white">Terracotta Planter</p>
+                            <p class="text-xs text-white/50">$18.00</p>
                         </div>
-                    </div>
+                    </button>
                 </div>
 
-                <!-- Bottom Actions -->
-                <div class="space-y-3 mt-6">
-                    <button onclick="startNewSale()" class="w-full py-4 rounded-full bg-md3-primary hover:bg-[#bfa3ff] text-md3-on-primary font-bold text-base shadow-xl transition flex items-center justify-center gap-2">
-                        <span class="material-symbols-outlined text-xl">add</span>
-                        <span>New Sale</span>
-                    </button>
-                    <button onclick="openReceiptModal()" class="w-full py-3 text-md3-outline hover:text-[#E6E0E9] text-xs font-bold transition flex items-center justify-center gap-2">
-                        <span class="material-symbols-outlined text-base">send</span>
-                        <span>Send Email Digital Receipt</span>
-                    </button>
+                <div class="bg-ios-card p-3 rounded-2xl border border-ios-cardBorder flex items-center justify-between text-xs">
+                    <span class="text-white/60">Cart Total</span>
+                    <span id="cart-item-total" class="font-bold text-base text-white">$0.00</span>
                 </div>
             </div>
 
-            <!-- SCREEN 5: PAYMENT DECLINED SCREEN -->
-            <div id="screen-declined" class="hidden flex-1 flex flex-col justify-between py-8 text-center">
-                <div class="my-auto flex flex-col items-center">
-                    <div class="w-24 h-24 rounded-full bg-md3-error-container text-md3-error flex items-center justify-center mb-6 border-2 border-md3-error/40 shadow-2xl">
-                        <span class="material-symbols-outlined text-5xl">cancel</span>
-                    </div>
-                    <h3 class="text-2xl font-bold text-[#E6E0E9]">Transaction Declined</h3>
-                    <p id="decline-reason-text" class="text-sm text-md3-outline mt-3 max-w-xs">
-                        Card read failed or forced decline setting is enabled.
-                    </p>
-                </div>
-
-                <button onclick="retryPayment()" class="w-full py-4 rounded-full bg-md3-surface-high hover:bg-md3-surface-highest text-[#E6E0E9] font-bold text-sm border border-md3-outline-variant/30 transition shadow-lg">
-                    Try Again
-                </button>
-            </div>
-
+            <!-- Apple Pay Charge CTA Button -->
+            <button id="btn-collect" onclick="initiateTapPayment()" disabled class="w-full mt-4 py-4 rounded-full bg-white hover:bg-gray-100 disabled:opacity-25 text-black font-extrabold text-lg transition shadow-glow-blue flex items-center justify-center gap-2 active:scale-98">
+                <i class="fa-brands fa-apple text-xl mb-0.5"></i>
+                <span id="btn-collect-text">Tap to Pay $17.25</span>
+            </button>
         </section>
 
-        <!-- TAB 2: ACTIVITY & HISTORY VIEW -->
-        <section id="tab-activity-view" class="hidden w-full flex-1 flex flex-col space-y-5">
+        <!-- TAB 1 OVERLAY: APPLE OFFICIAL TAP TO PAY SCREEN -->
+        <div id="screen-tap" class="hidden fixed inset-0 z-50 bg-black/95 ios-blur flex flex-col justify-between items-center py-10 px-6 select-none">
             
-            <!-- Summary Stats Header Cards -->
-            <div class="grid grid-cols-3 gap-3 text-center">
-                <div class="bg-md3-surface-container p-4 rounded-3xl border border-md3-outline-variant/20 shadow-md">
-                    <p class="text-[10px] font-bold text-md3-outline uppercase tracking-wider">Total Volume</p>
-                    <p id="stat-total-vol" class="text-xl sm:text-2xl font-black text-[#E6E0E9] mt-1">$0.00</p>
+            <!-- TOP APPLE TAP LOGO & PROMPT SECTION -->
+            <div class="w-full flex flex-col items-center relative pt-2">
+                
+                <!-- Background Particle Sparkle Canvas -->
+                <div class="relative w-full h-48 flex items-center justify-center">
+                    <canvas id="apple-sparkle-canvas" class="absolute inset-0 w-full h-full pointer-events-none"></canvas>
+                    
+                    <!-- Ripple Waves Background -->
+                    <div class="absolute w-40 h-40 rounded-full border border-ios-blue/30 animate-ripple-1"></div>
+                    <div class="absolute w-40 h-40 rounded-full border border-ios-blue/20 animate-ripple-2"></div>
+
+                    <!-- Authentic Apple Tap to Pay Contactless Graphic Emblem -->
+                    <div class="relative z-10 flex flex-col items-center">
+                        <div class="px-8 py-5 rounded-3xl border-2 border-white/80 bg-black/60 shadow-glow-blue flex flex-col items-center gap-2 backdrop-blur-2xl animate-nfc-pulse">
+                            <!-- Large Authentic Apple NFC Waves Icon -->
+                            <svg class="w-16 h-16 text-white fill-current" viewBox="0 0 24 24">
+                                <path fill="currentColor" d="M2.5 12c0-3.04 1.24-5.79 3.24-7.76l1.41 1.41C5.55 7.25 4.5 9.5 4.5 12s1.05 4.75 2.65 6.35l-1.41 1.41C3.74 17.79 2.5 15.04 2.5 12zm4 0c0-1.93.79-3.68 2.07-4.93l1.41 1.41C9.13 9.33 8.5 10.59 8.5 12s.63 2.67 1.48 3.52l-1.41 1.41C7.29 15.68 6.5 13.93 6.5 12zm10.5-6.35l-1.41 1.41C17.19 8.32 18 10.07 18 12s-.81 3.68-2.41 4.93l1.41 1.41C18.96 16.38 20 14.31 20 12c0-2.31-1.04-4.38-2.99-6.35zM14.5 12c0-1.04-.42-1.98-1.1-2.65l-1.41 1.41c.26.26.41.62.41 1.24 0 .62-.15.98-.41 1.24l1.41 1.41c.68-.67 1.1-1.61 1.1-2.65z"/>
+                            </svg>
+                            <span class="text-xs font-bold tracking-widest text-white/90 uppercase">Contactless</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="bg-md3-surface-container p-4 rounded-3xl border border-md3-outline-variant/20 shadow-md">
-                    <p class="text-[10px] font-bold text-md3-outline uppercase tracking-wider">Approved</p>
-                    <p id="stat-count-success" class="text-xl sm:text-2xl font-black text-md3-success mt-1">0</p>
-                </div>
-                <div class="bg-md3-surface-container p-4 rounded-3xl border border-md3-outline-variant/20 shadow-md">
-                    <p class="text-[10px] font-bold text-md3-outline uppercase tracking-wider">Avg Ticket</p>
-                    <p id="stat-avg-amount" class="text-xl sm:text-2xl font-black text-[#E6E0E9] mt-1">$0.00</p>
+
+                <!-- Hold Here Device Prompt -->
+                <div class="flex items-center gap-2 mt-2">
+                    <span class="material-symbols-outlined text-ios-blue text-xl animate-bounce">arrow_upward</span>
+                    <p class="text-white text-base font-bold tracking-tight">Hold Near Top of iPhone</p>
                 </div>
             </div>
 
-            <!-- Activity Logs Table Container -->
-            <div class="bg-md3-surface-container border border-md3-outline-variant/20 rounded-4xl p-5 shadow-xl flex-1 flex flex-col min-h-[400px]">
-                <div class="flex items-center justify-between mb-4">
-                    <div>
-                        <h3 class="text-base font-bold text-[#E6E0E9] flex items-center gap-2">
-                            <span class="material-symbols-outlined text-md3-primary">receipt_long</span> Recent Activity
-                        </h3>
-                        <p class="text-xs text-md3-outline">Session transaction log</p>
+            <!-- CENTRAL FLOATING APPLE MERCHANT CARD -->
+            <div onclick="simulateTapAction()" class="w-full max-w-xs bg-[#242426] rounded-[36px] p-8 flex flex-col items-center justify-center border border-white/10 shadow-apple-card text-center cursor-pointer transition transform hover:scale-[1.02] active:scale-95 group my-auto relative overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent pointer-events-none"></div>
+
+                <!-- Merchant Shop Avatar Icon -->
+                <div id="tap-card-avatar" class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-ios-orange to-amber-400 text-black flex items-center justify-center mb-4 shadow-md group-hover:scale-110 transition">
+                    <span class="material-symbols-outlined text-3xl font-bold">storefront</span>
+                </div>
+
+                <!-- Merchant Name -->
+                <p class="text-white/70 text-xs font-semibold mb-1">Pay <span id="tap-merchant-name" class="text-white font-bold">Grapner’s Greenhouse</span></p>
+
+                <!-- Large Amount Display -->
+                <h2 id="tap-card-amount" class="text-5xl font-black tracking-tight text-white mt-1">$17.25</h2>
+
+                <p class="text-[10px] text-ios-blue font-semibold mt-4 bg-ios-blue/10 px-3 py-1 rounded-full border border-ios-blue/20">
+                    Tap Card or Phone Here
+                </p>
+            </div>
+
+            <!-- DISMISS BUTTON -->
+            <div class="flex flex-col items-center space-y-3 mb-2">
+                <button onclick="cancelTapPayment()" class="w-12 h-12 rounded-full bg-ios-surface hover:bg-ios-surfaceHover text-white flex items-center justify-center transition border border-white/10 shadow-lg active:scale-90">
+                    <span class="material-symbols-outlined text-2xl">close</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- SCREEN: PROCESSING STATE -->
+        <div id="screen-processing" class="hidden fixed inset-0 z-50 bg-black/90 ios-blur flex flex-col items-center justify-center py-16 text-center">
+            <div class="relative flex items-center justify-center mb-6">
+                <div class="w-20 h-20 rounded-full border-4 border-ios-blue/20 border-t-ios-blue animate-spin"></div>
+                <i class="fa-brands fa-apple text-2xl text-white absolute"></i>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-1">Authorizing</h3>
+            <p id="processing-step-text" class="text-xs text-white/50 font-mono tracking-wide">Reading contactless NFC...</p>
+        </div>
+
+        <!-- SCREEN: APPROVED SUCCESS STATE -->
+        <div id="screen-success" class="hidden fixed inset-0 z-50 bg-black/95 ios-blur flex flex-col justify-between py-12 px-6 text-center">
+            <div class="my-auto flex flex-col items-center max-w-xs mx-auto w-full">
+                
+                <!-- Apple Approved Animated Check Circle -->
+                <div class="w-28 h-28 rounded-full bg-ios-green text-black flex items-center justify-center mb-6 shadow-glow-green animate-check-pop">
+                    <span class="material-symbols-outlined text-7xl font-extrabold">check</span>
+                </div>
+
+                <h3 class="text-2xl font-black text-white tracking-tight">Done</h3>
+                <p id="success-amount-text" class="text-4xl font-black text-ios-green mt-1 tracking-tight">$17.25</p>
+
+                <!-- Receipt Detail Inset Box -->
+                <div class="mt-6 bg-ios-card border border-ios-cardBorder rounded-2xl p-4 w-full text-left space-y-3 text-xs shadow-lg">
+                    <div class="flex justify-between text-white/50">
+                        <span>Merchant</span>
+                        <span id="success-merchant-name" class="text-white font-bold">Grapner’s Greenhouse</span>
                     </div>
-                    <button onclick="clearLogs()" class="text-xs text-md3-outline hover:text-md3-error transition font-bold px-3 py-1 rounded-full border border-md3-outline-variant/30">Clear Log</button>
-                </div>
-
-                <!-- Table Header -->
-                <div class="grid grid-cols-12 text-[10px] font-bold text-md3-outline uppercase tracking-wider px-3 py-2 bg-md3-surface rounded-2xl border border-md3-outline-variant/20 mb-2">
-                    <span class="col-span-3">Amount</span>
-                    <span class="col-span-3">Status</span>
-                    <span class="col-span-3">Method</span>
-                    <span class="col-span-3 text-right">Time</span>
-                </div>
-
-                <!-- Transactions Scroll Area -->
-                <div id="dashboard-logs" class="flex-1 overflow-y-auto space-y-2 pr-1">
-                    <div class="text-center py-20 text-md3-outline text-xs italic">
-                        No transactions recorded yet. Process a payment in the Terminal view.
+                    <div class="flex justify-between text-white/50">
+                        <span>Payment Method</span>
+                        <span id="success-card-brand" class="text-white font-semibold flex items-center gap-1.5">
+                            <i class="fa-brands fa-apple"></i> Apple Pay
+                        </span>
+                    </div>
+                    <div class="flex justify-between text-white/50">
+                        <span>Reference</span>
+                        <span id="success-intent-id" class="text-white/80 font-mono text-[11px]">tx_9f823a...</span>
                     </div>
                 </div>
             </div>
 
+            <div class="space-y-2.5 max-w-xs mx-auto w-full mt-6">
+                <button onclick="startNewSale()" class="w-full py-4 rounded-full bg-white text-black font-extrabold text-base shadow-lg hover:bg-gray-100 transition active:scale-98">
+                    Done
+                </button>
+                <button onclick="openReceiptModal()" class="w-full py-3 text-white/60 hover:text-white text-xs font-semibold transition">
+                    Send Digital Receipt
+                </button>
+            </div>
+        </div>
+
+        <!-- SCREEN: DECLINED STATE -->
+        <div id="screen-declined" class="hidden fixed inset-0 z-50 bg-black/90 ios-blur flex flex-col justify-between py-12 px-6 text-center">
+            <div class="my-auto flex flex-col items-center">
+                <div class="w-24 h-24 rounded-full bg-ios-red/20 text-ios-red flex items-center justify-center mb-6 border border-ios-red/40 shadow-lg">
+                    <span class="material-symbols-outlined text-6xl">close</span>
+                </div>
+                <h3 class="text-2xl font-bold text-white">Not Authorized</h3>
+                <p class="text-xs text-white/50 mt-2 max-w-xs">
+                    The contactless payment could not be completed. Please try tapping again.
+                </p>
+            </div>
+
+            <button onclick="retryPayment()" class="w-full py-4 rounded-full bg-ios-card hover:bg-ios-surface text-white font-bold text-sm border border-ios-cardBorder transition active:scale-95 max-w-xs mx-auto">
+                Try Again
+            </button>
+        </div>
+
+        <!-- TAB 2: ACTIVITY HISTORY VIEW -->
+        <section id="tab-activity-view" class="hidden w-full flex-1 flex flex-col space-y-4">
+            <!-- Stats Summary Insets -->
+            <div class="grid grid-cols-3 gap-2 text-center">
+                <div class="bg-ios-card p-3.5 rounded-2xl border border-ios-cardBorder">
+                    <p class="text-[10px] font-bold text-white/40 uppercase">Total Sales</p>
+                    <p id="stat-total-vol" class="text-base sm:text-lg font-bold text-white mt-0.5">$0.00</p>
+                </div>
+                <div class="bg-ios-card p-3.5 rounded-2xl border border-ios-cardBorder">
+                    <p class="text-[10px] font-bold text-white/40 uppercase">Approved</p>
+                    <p id="stat-count-success" class="text-base sm:text-lg font-bold text-ios-green mt-0.5">0</p>
+                </div>
+                <div class="bg-ios-card p-3.5 rounded-2xl border border-ios-cardBorder">
+                    <p class="text-[10px] font-bold text-white/40 uppercase">Average</p>
+                    <p id="stat-avg-amount" class="text-base sm:text-lg font-bold text-white mt-0.5">$0.00</p>
+                </div>
+            </div>
+
+            <!-- Transaction Activity List -->
+            <div class="bg-ios-card border border-ios-cardBorder rounded-3xl p-4 flex-1 flex flex-col min-h-[380px]">
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="text-xs font-bold text-white tracking-wider uppercase flex items-center gap-1.5">
+                        <span class="material-symbols-outlined text-ios-blue text-lg">receipt_long</span> Activity Log
+                    </h3>
+                    <button onclick="clearLogs()" class="text-xs text-white/40 hover:text-ios-red transition font-semibold">Clear</button>
+                </div>
+
+                <div id="dashboard-logs" class="flex-1 overflow-y-auto space-y-2 pr-1 no-scrollbar">
+                    <div class="text-center py-20 text-white/30 text-xs italic">
+                        No transactions recorded yet.
+                    </div>
+                </div>
+            </div>
         </section>
 
     </main>
 
     <!-- MODAL: SETTINGS -->
-    <div id="modal-settings" class="hidden fixed inset-0 z-50 bg-black/75 backdrop-blur-md flex items-center justify-center p-4">
-        <div class="bg-md3-surface-container border border-md3-outline-variant/30 rounded-4xl p-6 w-full max-w-md space-y-5 shadow-2xl">
-            <div class="flex justify-between items-center pb-3 border-b border-md3-outline-variant/20">
-                <h3 class="text-lg font-bold text-[#E6E0E9] flex items-center gap-2">
-                    <span class="material-symbols-outlined text-md3-primary">tune</span> Terminal Configuration
-                </h3>
-                <button onclick="toggleSettingsModal()" class="text-md3-outline hover:text-[#E6E0E9] p-1 rounded-full">
+    <div id="modal-settings" class="hidden fixed inset-0 z-50 bg-black/80 ios-blur flex items-center justify-center p-4">
+        <div class="bg-ios-card border border-ios-cardBorder rounded-3xl p-6 w-full max-w-sm space-y-4 shadow-2xl">
+            <div class="flex justify-between items-center pb-2 border-b border-ios-cardBorder">
+                <h3 class="text-base font-bold text-white">POS Settings</h3>
+                <button onclick="toggleSettingsModal()" class="text-white/40 hover:text-white p-1">
                     <span class="material-symbols-outlined text-xl">close</span>
                 </button>
             </div>
 
-            <div class="space-y-4 text-xs sm:text-sm">
+            <div class="space-y-3.5 text-xs">
                 <div>
-                    <label class="block text-md3-outline font-bold mb-1.5">Shop / Merchant Name</label>
-                    <input id="cfg-merchant" type="text" value="My Store" class="w-full bg-md3-surface border border-md3-outline-variant/40 rounded-2xl p-3.5 text-sm text-[#E6E0E9] focus:outline-none focus:border-md3-primary">
+                    <label class="block text-white/50 font-semibold mb-1">Merchant / Shop Name</label>
+                    <input id="cfg-merchant" type="text" value="Grapner’s Greenhouse" class="w-full bg-ios-surface border border-ios-cardBorder rounded-xl p-3 text-sm text-white focus:outline-none focus:border-ios-blue">
                 </div>
 
                 <div>
-                    <label class="block text-md3-outline font-bold mb-1.5">Currency</label>
-                    <select id="cfg-currency" onchange="onCurrencySelectChange()" class="w-full bg-md3-surface border border-md3-outline-variant/40 rounded-2xl p-3.5 text-sm text-[#E6E0E9] focus:outline-none focus:border-md3-primary">
+                    <label class="block text-white/50 font-semibold mb-1">Currency</label>
+                    <select id="cfg-currency" onchange="onCurrencySelectChange()" class="w-full bg-ios-surface border border-ios-cardBorder rounded-xl p-3 text-sm text-white focus:outline-none focus:border-ios-blue">
                         <option value="USD">USD ($)</option>
                         <option value="EUR">EUR (€)</option>
                         <option value="GBP">GBP (£)</option>
@@ -419,131 +459,215 @@
                 </div>
 
                 <div>
-                    <label class="block text-md3-outline font-bold mb-1.5">Simulated Card Result</label>
-                    <select id="cfg-outcome" class="w-full bg-md3-surface border border-md3-outline-variant/40 rounded-2xl p-3.5 text-sm text-[#E6E0E9] focus:outline-none focus:border-md3-primary">
-                        <option value="visa-approve">Visa Contactless (Approved)</option>
-                        <option value="apple-pay">Apple Pay / Google Wallet (Approved)</option>
-                        <option value="mc-approve">Mastercard Contactless (Approved)</option>
+                    <label class="block text-white/50 font-semibold mb-1">Simulated Card Outcome</label>
+                    <select id="cfg-outcome" class="w-full bg-ios-surface border border-ios-cardBorder rounded-xl p-3 text-sm text-white focus:outline-none focus:border-ios-blue">
+                        <option value="apple-pay">Apple Pay (Approved)</option>
+                        <option value="visa-approve">Contactless Visa (Approved)</option>
+                        <option value="mc-approve">Mastercard (Approved)</option>
+                        <option value="amex-approve">American Express (Approved)</option>
                         <option value="force-decline">Force Card Decline (Error)</option>
                     </select>
                 </div>
 
-                <div class="flex items-center justify-between py-2 border-t border-md3-outline-variant/20">
+                <div class="flex items-center justify-between py-2 border-t border-ios-cardBorder">
                     <div>
-                        <p class="font-bold text-[#E6E0E9]">Sound Effects</p>
-                        <p class="text-md3-outline text-xs">Audio feedback for NFC tap and approval</p>
+                        <p class="font-bold text-white">Sound Effects</p>
+                        <p class="text-white/40 text-[11px]">Play authentic Apple Pay audio chime</p>
                     </div>
-                    <input id="cfg-sound" type="checkbox" checked class="w-6 h-6 accent-md3-primary cursor-pointer">
+                    <input id="cfg-sound" type="checkbox" checked class="w-5 h-5 accent-ios-blue cursor-pointer">
                 </div>
             </div>
 
-            <button onclick="saveConfiguration()" class="w-full py-4 bg-md3-primary hover:bg-[#bfa3ff] text-md3-on-primary font-bold rounded-full transition shadow-lg text-sm">
-                Save Configuration
+            <button onclick="saveConfiguration()" class="w-full py-3 bg-white text-black font-extrabold rounded-xl transition text-xs shadow-md">
+                Save & Apply
             </button>
         </div>
     </div>
 
     <!-- MODAL: RECEIPT -->
-    <div id="modal-receipt" class="hidden fixed inset-0 z-50 bg-black/75 backdrop-blur-md flex items-center justify-center p-4">
-        <div class="bg-md3-surface-container border border-md3-outline-variant/30 rounded-4xl p-6 w-full max-w-xs space-y-4 text-center shadow-2xl">
-            <div class="w-14 h-14 rounded-2xl bg-md3-primary-container text-md3-on-primary-container mx-auto flex items-center justify-center">
-                <span class="material-symbols-outlined text-3xl">mark_email_read</span>
-            </div>
-            <h4 class="text-lg font-bold text-[#E6E0E9]">Digital Receipt</h4>
-            <input id="receipt-email-input" type="email" placeholder="customer@example.com" class="w-full bg-md3-surface border border-md3-outline-variant/40 rounded-2xl p-3.5 text-xs text-[#E6E0E9] focus:outline-none focus:border-md3-primary">
+    <div id="modal-receipt" class="hidden fixed inset-0 z-50 bg-black/80 ios-blur flex items-center justify-center p-4">
+        <div class="bg-ios-card border border-ios-cardBorder rounded-3xl p-6 w-full max-w-xs space-y-4 text-center shadow-2xl">
+            <h4 class="text-base font-bold text-white">Send Digital Receipt</h4>
+            <input id="receipt-email-input" type="email" placeholder="customer@example.com" class="w-full bg-ios-surface border border-ios-cardBorder rounded-xl p-3 text-xs text-white focus:outline-none focus:border-ios-blue">
             <div class="flex gap-2">
-                <button onclick="closeReceiptModal()" class="w-1/2 py-3 bg-md3-surface-high text-md3-outline rounded-full text-xs font-bold">Cancel</button>
-                <button onclick="submitReceipt()" class="w-1/2 py-3 bg-md3-primary text-md3-on-primary rounded-full text-xs font-bold">Send</button>
+                <button onclick="closeReceiptModal()" class="w-1/2 py-2.5 bg-ios-surface text-white/70 hover:text-white rounded-xl text-xs font-semibold">Cancel</button>
+                <button onclick="submitReceipt()" class="w-1/2 py-2.5 bg-white text-black rounded-xl text-xs font-bold">Send</button>
             </div>
         </div>
     </div>
 
     <!-- TOAST NOTIFICATION -->
-    <div id="toast" class="fixed bottom-6 right-6 bg-md3-surface-high border border-md3-outline-variant/40 text-[#E6E0E9] text-xs font-semibold px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-2.5 transition-all opacity-0 pointer-events-none z-50">
-        <span id="toast-icon" class="material-symbols-outlined text-md3-success text-lg">check_circle</span>
-        <span id="toast-message">Settings saved</span>
+    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-ios-surface border border-white/10 text-white text-xs font-semibold px-4 py-2.5 rounded-full shadow-2xl transition-all opacity-0 pointer-events-none z-50 flex items-center gap-2">
+        <span id="toast-message">Settings updated</span>
     </div>
 
     <script>
-        /* APPLICATION STATE */
+        /* APP STATE */
         let state = {
-            centsAmount: 0,
+            centsAmount: 1725, // Default $17.25 matching image
             tipPercent: 0,
+            cartItems: [],
             currency: 'USD',
             currencySymbols: { USD: '$', EUR: '€', GBP: '£', CAD: '$' },
-            merchantName: 'My Store',
+            merchantName: 'Grapner’s Greenhouse',
             soundEnabled: true,
-            outcome: 'visa-approve',
-            processingDelay: 1.5,
+            outcome: 'apple-pay',
+            processingDelay: 1.2,
             logs: [],
             totalVolCents: 0,
             successCount: 0
         };
 
-        // Web Audio Synthesizer for Precise Material POS Beeps
+        /* AUTHENTIC APPLE PAY AUDIO SYNTHESIZER */
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
-        function playSound(type) {
+        function playApplePayTone(type) {
             if (!state.soundEnabled) return;
             if (audioCtx.state === 'suspended') {
                 audioCtx.resume();
             }
 
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
             const now = audioCtx.currentTime;
 
             if (type === 'tap') {
+                // Subtle tap click feedback
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
                 osc.type = 'sine';
-                osc.frequency.setValueAtTime(1200, now);
-                gain.gain.setValueAtTime(0.12, now);
-                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+                osc.frequency.setValueAtTime(800, now);
+                gain.gain.setValueAtTime(0.08, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
                 osc.start(now);
-                osc.stop(now + 0.1);
+                osc.stop(now + 0.05);
+
             } else if (type === 'success') {
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(1046.5, now);
-                osc.frequency.setValueAtTime(1318.5, now + 0.08);
-                gain.gain.setValueAtTime(0.18, now);
-                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
-                osc.start(now);
-                osc.stop(now + 0.35);
+                // AUTHENTIC APPLE PAY DUAL HIGH CHIME (C6 -> G6 harmonic blend)
+                const playChimeTone = (freq, startTime, duration) => {
+                    const osc1 = audioCtx.createOscillator();
+                    const osc2 = audioCtx.createOscillator(); // Harmonic resonance
+                    const gain = audioCtx.createGain();
+
+                    osc1.type = 'sine';
+                    osc1.frequency.setValueAtTime(freq, startTime);
+
+                    osc2.type = 'sine';
+                    osc2.frequency.setValueAtTime(freq * 2, startTime); // 1st overtone octave
+
+                    gain.gain.setValueAtTime(0.25, startTime);
+                    gain.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
+
+                    osc1.connect(gain);
+                    osc2.connect(gain);
+                    gain.connect(audioCtx.destination);
+
+                    osc1.start(startTime);
+                    osc2.start(startTime);
+                    osc1.stop(startTime + duration);
+                    osc2.stop(startTime + duration);
+                };
+
+                // Tone 1: High C6 (~1046.5 Hz)
+                playChimeTone(1046.5, now, 0.28);
+                // Tone 2: Crisp G6 (~1567.98 Hz) starting 80ms later
+                playChimeTone(1567.98, now + 0.08, 0.45);
+
             } else if (type === 'error') {
+                // Error buzz
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
                 osc.type = 'sawtooth';
-                osc.frequency.setValueAtTime(220, now);
+                osc.frequency.setValueAtTime(160, now);
                 gain.gain.setValueAtTime(0.15, now);
-                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
                 osc.start(now);
-                osc.stop(now + 0.25);
+                osc.stop(now + 0.3);
             }
         }
 
-        /* INITIALIZATION */
+        /* INITIALIZATION & SPARKLE CANVAS */
         window.addEventListener('DOMContentLoaded', () => {
             updateShopNameUI();
             updateDisplay();
+            initSparkleCanvas();
         });
 
-        /* TAB SWITCHING LOGIC */
+        let canvasAnimationId = null;
+        function initSparkleCanvas() {
+            const canvas = document.getElementById('apple-sparkle-canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            
+            function resize() {
+                canvas.width = canvas.offsetWidth;
+                canvas.height = canvas.offsetHeight;
+            }
+            resize();
+
+            const particles = Array.from({ length: 50 }, () => ({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radius: Math.random() * 1.8 + 0.4,
+                alpha: Math.random() * 0.7 + 0.3,
+                speedY: -(Math.random() * 0.3 + 0.1),
+                color: Math.random() > 0.4 ? '#0A84FF' : '#30D158'
+            }));
+
+            function render() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach(p => {
+                    p.y += p.speedY;
+                    if (p.y < 0) p.y = canvas.height;
+
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = p.color;
+                    ctx.globalAlpha = p.alpha;
+                    ctx.shadowBlur = 8;
+                    ctx.shadowColor = '#0A84FF';
+                    ctx.fill();
+                });
+                canvasAnimationId = requestAnimationFrame(render);
+            }
+            if (canvasAnimationId) cancelAnimationFrame(canvasAnimationId);
+            render();
+        }
+
+        /* TAB NAVIGATION */
         function switchTab(tabName) {
             const isTerminal = tabName === 'terminal';
             document.getElementById('tab-terminal-view').classList.toggle('hidden', !isTerminal);
             document.getElementById('tab-activity-view').classList.toggle('hidden', isTerminal);
 
             document.getElementById('tab-btn-terminal').className = isTerminal
-                ? 'px-3.5 py-1.5 sm:px-5 sm:py-2 rounded-full text-xs font-bold transition flex items-center gap-1.5 bg-md3-primary text-md3-on-primary shadow-sm'
-                : 'px-3.5 py-1.5 sm:px-5 sm:py-2 rounded-full text-xs font-bold transition flex items-center gap-1.5 text-md3-outline hover:text-[#E6E0E9]';
+                ? 'px-3.5 py-1.5 rounded-full text-xs font-bold transition bg-white text-black shadow-sm'
+                : 'px-3.5 py-1.5 rounded-full text-xs font-semibold transition text-white/60 hover:text-white';
 
             document.getElementById('tab-btn-activity').className = !isTerminal
-                ? 'px-3.5 py-1.5 sm:px-5 sm:py-2 rounded-full text-xs font-bold transition flex items-center gap-1.5 bg-md3-primary text-md3-on-primary shadow-sm'
-                : 'px-3.5 py-1.5 sm:px-5 sm:py-2 rounded-full text-xs font-bold transition flex items-center gap-1.5 text-md3-outline hover:text-[#E6E0E9]';
+                ? 'px-3.5 py-1.5 rounded-full text-xs font-bold transition bg-white text-black shadow-sm'
+                : 'px-3.5 py-1.5 rounded-full text-xs font-semibold transition text-white/60 hover:text-white';
         }
 
-        /* CUSTOMIZABLE SHOP NAME HANDLERS */
+        function setPosInputMode(mode) {
+            const isKeypad = mode === 'keypad';
+            document.getElementById('pos-mode-keypad').classList.toggle('hidden', !isKeypad);
+            document.getElementById('pos-mode-items').classList.toggle('hidden', isKeypad);
+
+            document.getElementById('mode-btn-keypad').className = isKeypad
+                ? 'flex-1 py-2 rounded-xl transition text-center bg-ios-surface text-white shadow-sm flex items-center justify-center gap-1.5 font-bold'
+                : 'flex-1 py-2 rounded-xl transition text-center text-white/50 hover:text-white flex items-center justify-center gap-1.5 font-semibold';
+
+            document.getElementById('mode-btn-items').className = !isKeypad
+                ? 'flex-1 py-2 rounded-xl transition text-center bg-ios-surface text-white shadow-sm flex items-center justify-center gap-1.5 font-bold'
+                : 'flex-1 py-2 rounded-xl transition text-center text-white/50 hover:text-white flex items-center justify-center gap-1.5 font-semibold';
+        }
+
+        /* CUSTOM SHOP NAME LOGIC */
         function editShopNameInline() {
-            const newName = prompt("Enter your shop name:", state.merchantName);
+            const newName = prompt("Enter your Shop Name:", state.merchantName);
             if (newName && newName.trim() !== "") {
                 state.merchantName = newName.trim();
                 document.getElementById('cfg-merchant').value = state.merchantName;
@@ -554,14 +678,15 @@
 
         function updateShopNameUI() {
             document.getElementById('app-shop-name').innerText = state.merchantName;
+            document.getElementById('tap-merchant-name').innerText = state.merchantName;
             const successElem = document.getElementById('success-merchant-name');
             if (successElem) successElem.innerText = state.merchantName;
         }
 
-        /* KEYPAD LOGIC */
+        /* NUMPAD KEYPAD LOGIC */
         function appendDigit(digit) {
+            playApplePayTone('tap');
             if (digit === '00' && state.centsAmount === 0) return;
-            
             if (digit === '00') {
                 if (state.centsAmount < 100000) state.centsAmount *= 100;
             } else {
@@ -571,28 +696,40 @@
         }
 
         function backspaceDigit() {
+            playApplePayTone('tap');
             state.centsAmount = Math.floor(state.centsAmount / 10);
             updateDisplay();
         }
 
         function clearNumpad() {
+            playApplePayTone('tap');
             state.centsAmount = 0;
             state.tipPercent = 0;
+            state.cartItems = [];
             resetTipButtons();
             updateDisplay();
         }
 
+        function addItemToSale(name, priceCents) {
+            playApplePayTone('tap');
+            state.cartItems.push({ name, priceCents });
+            state.centsAmount += priceCents;
+            updateDisplay();
+            showToast(`Added ${name}`);
+        }
+
         function selectTip(percent) {
+            playApplePayTone('tap');
             state.tipPercent = percent;
             resetTipButtons();
-            document.getElementById(`tip-btn-${percent}`).className = 'tip-btn py-2.5 rounded-2xl bg-md3-primary text-md3-on-primary font-bold transition shadow-sm';
+            document.getElementById(`tip-btn-${percent}`).className = 'tip-btn py-2.5 rounded-xl bg-white text-black font-bold transition';
             updateDisplay();
         }
 
         function resetTipButtons() {
             [0, 15, 18, 20].forEach(p => {
                 const btn = document.getElementById(`tip-btn-${p}`);
-                if (btn) btn.className = 'tip-btn py-2.5 rounded-2xl bg-md3-surface-high text-md3-outline hover:text-[#E6E0E9] transition font-semibold';
+                if (btn) btn.className = 'tip-btn py-2.5 rounded-xl bg-ios-surface text-white/70 hover:text-white transition';
             });
         }
 
@@ -616,46 +753,36 @@
 
             document.getElementById('amount-display').innerText = baseFormatted;
             document.getElementById('currency-symbol').innerText = sym;
+            document.getElementById('cart-item-total').innerText = `${sym}${baseFormatted}`;
+            document.getElementById('cart-count').innerText = state.cartItems.length;
+
+            // Tip label
+            const tipCents = totalCents - state.centsAmount;
+            document.getElementById('tip-amount-label').innerText = `${sym}${formatCents(tipCents)}`;
 
             const collectBtn = document.getElementById('btn-collect');
             const collectText = document.getElementById('btn-collect-text');
 
             if (totalCents > 0) {
                 collectBtn.disabled = false;
-                collectText.innerText = `Charge ${sym}${totalFormatted}`;
+                collectText.innerText = `Tap to Pay ${sym}${totalFormatted}`;
             } else {
                 collectBtn.disabled = true;
-                collectText.innerText = `Charge ${sym}0.00`;
+                collectText.innerText = `Tap to Pay ${sym}0.00`;
             }
         }
 
-        /* PAYMENT SIMULATION WORKFLOW */
+        /* PAYMENT WORKFLOW */
         function initiateTapPayment() {
             const totalCents = calculateTotalCents();
             if (totalCents <= 0) return;
 
             const sym = state.currencySymbols[state.currency];
-            document.getElementById('tap-charge-amount').innerText = `${sym}${formatCents(totalCents)}`;
-
-            const cardBrandLabel = document.getElementById('sim-card-brand-label');
-            const cardDigits = document.getElementById('sim-card-digits');
-            const cardLogo = document.getElementById('sim-card-logo');
-
-            if (state.outcome === 'apple-pay') {
-                cardBrandLabel.innerText = 'Apple Wallet';
-                cardDigits.innerText = 'Passholder';
-                cardLogo.className = 'fa-brands fa-apple text-base text-slate-900';
-            } else if (state.outcome === 'mc-approve') {
-                cardBrandLabel.innerText = 'Mastercard';
-                cardDigits.innerText = '•••• 8810';
-                cardLogo.className = 'fa-brands fa-cc-mastercard text-base text-amber-600';
-            } else {
-                cardBrandLabel.innerText = 'Contactless';
-                cardDigits.innerText = '•••• 4242';
-                cardLogo.className = 'fa-brands fa-cc-visa text-base text-indigo-900';
-            }
+            document.getElementById('tap-card-amount').innerText = `${sym}${formatCents(totalCents)}`;
+            document.getElementById('tap-merchant-name').innerText = state.merchantName;
 
             switchScreen('screen-tap');
+            initSparkleCanvas();
         }
 
         function cancelTapPayment() {
@@ -663,23 +790,23 @@
         }
 
         function simulateTapAction() {
-            playSound('tap');
+            playApplePayTone('tap');
             switchScreen('screen-processing');
 
             const statusText = document.getElementById('processing-step-text');
-            statusText.innerText = "Reading card NFC data...";
+            statusText.innerText = "Reading Contactless NFC...";
 
             setTimeout(() => {
-                statusText.innerText = "Authorizing with banking network...";
+                statusText.innerText = "Authorizing Apple Pay...";
             }, (state.processingDelay * 1000) / 2);
 
             setTimeout(() => {
                 if (state.outcome === 'force-decline') {
-                    playSound('error');
+                    playApplePayTone('error');
                     switchScreen('screen-declined');
-                    addDashboardLog(calculateTotalCents(), 'failed', 'Visa •••• 4242');
+                    addDashboardLog(calculateTotalCents(), 'failed', 'Apple Pay');
                 } else {
-                    playSound('success');
+                    playApplePayTone('success');
                     handleSuccess();
                 }
             }, state.processingDelay * 1000);
@@ -692,24 +819,26 @@
 
             document.getElementById('success-amount-text').innerText = amountFormatted;
 
-            const intentId = 'pi_3M' + Math.random().toString(36).substring(2, 11);
+            const intentId = 'tx_' + Math.random().toString(36).substring(2, 10);
             document.getElementById('success-intent-id').innerText = intentId;
 
-            let methodStr = 'Visa •••• 4242';
-            let brandHTML = '<i class="fa-brands fa-cc-visa text-md3-primary"></i> Visa •••• 4242';
+            let methodStr = 'Apple Pay';
+            let brandHTML = '<i class="fa-brands fa-apple text-lg"></i> Apple Pay';
 
-            if (state.outcome === 'apple-pay') {
-                methodStr = 'Apple Pay';
-                brandHTML = '<i class="fa-brands fa-apple text-slate-100"></i> Apple Pay';
+            if (state.outcome === 'visa-approve') {
+                methodStr = 'Visa •••• 4242';
+                brandHTML = '<i class="fa-brands fa-cc-visa text-ios-blue text-lg"></i> Visa •••• 4242';
             } else if (state.outcome === 'mc-approve') {
                 methodStr = 'Mastercard •••• 8810';
-                brandHTML = '<i class="fa-brands fa-cc-mastercard text-amber-400"></i> Mastercard •••• 8810';
+                brandHTML = '<i class="fa-brands fa-cc-mastercard text-ios-orange text-lg"></i> Mastercard •••• 8810';
+            } else if (state.outcome === 'amex-approve') {
+                methodStr = 'AMEX •••• 1005';
+                brandHTML = '<i class="fa-brands fa-cc-amex text-ios-blue text-lg"></i> AMEX •••• 1005';
             }
 
             document.getElementById('success-card-brand').innerHTML = brandHTML;
             updateShopNameUI();
 
-            // Stats update
             state.totalVolCents += totalCents;
             state.successCount += 1;
             updateStatsUI();
@@ -729,20 +858,21 @@
 
         function switchScreen(screenId) {
             ['screen-keypad', 'screen-tap', 'screen-processing', 'screen-success', 'screen-declined'].forEach(id => {
-                document.getElementById(id).classList.toggle('hidden', id !== screenId);
+                const elem = document.getElementById(id);
+                if (elem) elem.classList.toggle('hidden', id !== screenId);
             });
         }
 
         /* LOGS & STATS */
         function addDashboardLog(cents, status, method, intentId = '') {
-            const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
             state.logs.unshift({
                 cents,
                 status,
                 method,
                 timeStr,
-                intentId: intentId || ('pi_3M' + Math.random().toString(36).substring(2, 9))
+                intentId: intentId || ('tx_' + Math.random().toString(36).substring(2, 8))
             });
 
             renderDashboardLogs();
@@ -753,25 +883,25 @@
             const sym = state.currencySymbols[state.currency];
 
             if (state.logs.length === 0) {
-                container.innerHTML = `
-                    <div class="text-center py-20 text-md3-outline text-xs italic">
-                        No transactions recorded yet. Process a payment in the Terminal view.
-                    </div>
-                `;
+                container.innerHTML = `<div class="text-center py-20 text-white/30 text-xs italic">No transactions recorded yet.</div>`;
                 return;
             }
 
             container.innerHTML = state.logs.map(log => {
                 const statusBadge = log.status === 'succeeded' 
-                    ? `<span class="px-2.5 py-0.5 text-[10px] rounded-full bg-md3-success-container/50 text-md3-success font-bold border border-md3-success/30">processed</span>`
-                    : `<span class="px-2.5 py-0.5 text-[10px] rounded-full bg-md3-error-container/50 text-md3-error font-bold border border-md3-error/30">declined</span>`;
+                    ? `<span class="px-2.5 py-0.5 text-[10px] rounded-full bg-ios-green/20 text-ios-green font-bold">Approved</span>`
+                    : `<span class="px-2.5 py-0.5 text-[10px] rounded-full bg-ios-red/20 text-ios-red font-bold">Declined</span>`;
 
                 return `
-                    <div class="grid grid-cols-12 items-center text-xs px-3 py-3 bg-md3-surface hover:bg-md3-surface-high rounded-2xl border border-md3-outline-variant/20 transition">
-                        <div class="col-span-3 font-extrabold text-[#E6E0E9]">${sym}${formatCents(log.cents)}</div>
-                        <div class="col-span-3">${statusBadge}</div>
-                        <div class="col-span-3 text-md3-outline font-medium text-xs">${log.method}</div>
-                        <div class="col-span-3 text-right font-mono text-[10px] text-md3-outline">${log.timeStr}</div>
+                    <div class="flex items-center justify-between text-xs px-3.5 py-3 bg-ios-surface rounded-2xl border border-ios-cardBorder">
+                        <div>
+                            <div class="font-extrabold text-white">${sym}${formatCents(log.cents)}</div>
+                            <div class="text-[10px] text-white/40 font-semibold">${log.method}</div>
+                        </div>
+                        <div class="text-right flex flex-col items-end gap-1">
+                            ${statusBadge}
+                            <span class="text-[10px] font-mono text-white/30">${log.timeStr}</span>
+                        </div>
                     </div>
                 `;
             }).join('');
@@ -792,10 +922,10 @@
             state.successCount = 0;
             renderDashboardLogs();
             updateStatsUI();
-            showToast("Activity log cleared");
+            showToast("Transaction history cleared");
         }
 
-        /* MODALS & CONFIGURATION */
+        /* MODALS & CONFIG */
         function toggleSettingsModal() {
             document.getElementById('modal-settings').classList.toggle('hidden');
         }
@@ -808,13 +938,13 @@
         }
 
         function saveConfiguration() {
-            state.merchantName = document.getElementById('cfg-merchant').value || 'My Store';
+            state.merchantName = document.getElementById('cfg-merchant').value || 'Grapner’s Greenhouse';
             state.currency = document.getElementById('cfg-currency').value;
             state.outcome = document.getElementById('cfg-outcome').value;
             state.soundEnabled = document.getElementById('cfg-sound').checked;
 
             updateShopNameUI();
-            document.getElementById('badge-test-mode').classList.toggle('hidden', state.outcome !== 'force-decline');
+            document.getElementById('badge-decline-mode').classList.toggle('hidden', state.outcome !== 'force-decline');
 
             updateDisplay();
             toggleSettingsModal();
@@ -846,7 +976,7 @@
             toast.classList.remove('opacity-0', 'pointer-events-none');
             setTimeout(() => {
                 toast.classList.add('opacity-0', 'pointer-events-none');
-            }, 2500);
+            }, 2200);
         }
     </script>
 </body>
